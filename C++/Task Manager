@@ -1,0 +1,112 @@
+#include <algorithm>
+#include <iostream>
+#include <limits>
+#include <sstream>
+#include <vector>
+
+class Task {
+public:
+  std::string name;
+  int priority;
+  std::string deadline;
+
+  Task(std::string n, int p, std::string d)
+      : name(std::move(n)), priority(p), deadline(std::move(d)) {}
+};
+
+class TaskScheduler {
+private:
+  std::vector<Task> tasks;
+
+public:
+  void addTask(const Task &task) { tasks.push_back(task); }
+
+  void removeTask(const std::string &taskName) {
+    tasks.erase(std::remove_if(tasks.begin(), tasks.end(), [&taskName](const Task &task) { 
+      return task.name == taskName;
+    }),
+      tasks.end());
+  }
+
+  void prioritizeTasks() {
+    std::sort(tasks.begin(), tasks.end(), [](const Task &a, const Task &b) {
+      return a.priority > b.priority;
+    });
+  }
+
+  void displayTasks() const {
+    for (const auto &task : tasks) {
+      std::cout << "Task: " << task.name << "\tPriority: " << task.priority << "\tDeadline: " << task.deadline << "\n";
+    }
+  }
+};
+
+int main() {
+  TaskScheduler scheduler;
+
+  int choice;
+  do {
+    std::cout << "\nTask Menu:\n";
+    std::cout << "1. Add Task\n";
+    std::cout << "2. Remove Task\n";
+    std::cout << "3. Prioritize Tasks\n";
+    std::cout << "4. Display Tasks\n";
+    std::cout << "5. Exit\n";
+
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    switch (choice) {
+    case 1: {
+      std::string name, deadline;
+      int priority;
+
+      std::cout << "Enter task name: ";
+      std::getline(std::cin, name);
+
+      std::cout << "Enter priority level (1-10): ";
+      while (!(std::cin >> priority)) {
+        std::cout << "Please enter a numeric value for priority: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      }
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+      std::cout << "Enter deadline ";
+      std::getline(std::cin, deadline);
+
+      Task newTask(name, priority, deadline);
+      scheduler.addTask(newTask);
+
+      std::cout << "Task added successfully!\n";
+      break;
+    }
+    case 2: {
+      std::string name;
+      std::cout << "Enter task name to remove: ";
+      std::getline(std::cin, name);
+
+      scheduler.removeTask(name);
+      std::cout << "Task removed successfully!\n";
+      break;
+    }
+    case 3:
+      scheduler.prioritizeTasks();
+      std::cout << "Tasks prioritized!\n";
+      break;
+    case 4:
+      std::cout << "\nTasks:\n";
+      scheduler.displayTasks();
+      break;
+    case 5:
+      std::cout << "Exiting Task Scheduler. Goodbye!\n";
+      break;
+    default:
+      std::cout << "Invalid choice. Please try again.\n";
+      break;
+    }
+  } while (choice != 5);
+
+  return 0;
+}
