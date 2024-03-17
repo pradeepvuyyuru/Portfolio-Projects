@@ -1,0 +1,47 @@
+#include <iomanip>
+#include <iostream>
+#include <vector> // Needed to define vectors
+using namespace std;
+
+struct employee {
+  double payRate, hours = 0.0;
+};
+
+int main() {
+  vector<employee> empVec;
+
+  int numEmployees;
+
+  // Get the number of employees.
+  cout << "How many employees do you have? ";
+  cin >> numEmployees;
+
+  // Input the payroll data.
+  cout << "Enter the hours worked by " << numEmployees;
+  cout << " employees and their hourly rates.\n";
+  for (int index = 0; index < numEmployees; index++) {
+    employee empObj;
+    // int tempHours;    // To hold the number of hours entered
+    // ouble tempRate;  // To hold the payrate entered
+
+    cout << "Hours worked by employee #" << (index + 1);
+    cout << ": ";
+    cin >> empObj.hours;
+    // hours.push_back(tempHours);      // Add an element to hours
+    cout << "Hourly pay rate for employee #";
+    cout << (index + 1) << ": ";
+    cin >> empObj.payRate;
+    empVec.push_back(empObj); // Add an element to payRate
+  }
+
+  // Display each employee's gross pay.
+  cout << "Here is the gross pay for each employee:\n";
+  cout << fixed << showpoint << setprecision(2);
+  for (int i = 0; i < numEmployees; i++) {
+
+    double grossPay = empVec[i].hours * empVec[i].payRate;
+    cout << "Employee #" << (i + 1);
+    cout << ": $" << grossPay << endl;
+  }
+  return 0;
+}
