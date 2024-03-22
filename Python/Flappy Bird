@@ -1,0 +1,72 @@
+import pygame
+import random
+import time
+from pygame.locals import*
+
+pygame.init()
+red=(255,44,48)
+blue=(142,240,255)
+green=(57,180,95)
+white=(255,25,255)
+black=(0,0,0)
+yellow=(255,255,0)
+grass=(117,232,62)
+
+x=300
+y=300
+xchange=2
+ychange=1
+a=0
+b=1000
+c=0
+e=random.randint(100,400)
+d=e+100
+score=0
+screen=pygame.display.set_mode((1000,600))
+pygame.display.set_caption('yolo')
+
+def show_text(msg,x,y,red):
+    fontobj=pygame.font.SysFont('freesans',32)
+    msgobj=fontobj.render(msg,False,red)
+    screen.blit(msgobj,(x,y))
+        
+while True:
+    pygame.display.update()
+    screen.fill(blue)
+    pygame.draw.circle(screen,yellow,(x,y),10)
+    pygame.draw.rect(screen,grass,(0,550,1000,50))
+    for event in pygame.event.get():
+        if event.type==QUIT:
+            pygame.quit()
+            exit()
+        elif event.type==KEYDOWN:
+            if event.key==K_SPACE:
+                ychange=-2
+        elif event.type==KEYUP:
+                   if event.key==K_SPACE:
+                    ychange=1
+    pygame.draw.rect(screen,green,(b,c,50,e))#top pole
+    pygame.draw.rect(screen,green,(b,d,50,600-d))#bottom pole
+    b=b-1
+    if b<0:
+        e=random.randint(100,400)
+        b=1000
+        d=e+100
+    y=y+ychange
+    if x==b+50:
+        score=score+1
+    show_text(str(score),300,400,red)
+    if (x<=b+50 and x>=b) and (0<y<e or d<y<600):
+        print('collision')
+        x=300
+        y=300 
+        b=1000
+        score=0
+    show_text(str(score),300,400,red)
+    if y<=0 or y>=550:
+        print('other collision')
+        x=300
+        y=300
+        b=1000
+        score=0
+    show_text(str(score),300,400,red)
