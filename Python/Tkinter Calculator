@@ -1,0 +1,149 @@
+from tkinter import*
+
+master = Tk()
+
+from tkinter import*
+import re
+master = Tk()
+import tkinter.messagebox
+
+def one():
+    g='1'
+    print(g)
+    e1.insert(END,g)
+
+def two():
+    g='2'
+    print(g)
+    e1.insert(END,g)
+
+def three():
+    g='3'
+    print(g)
+    e1.insert(END,g)
+
+def four():
+    g='4'
+    print(g)
+    e1.insert(END,g)
+
+
+def five():
+    g='5'
+    print(g)
+    e1.insert(END,g)
+
+
+def six():
+    g='6'
+    print(g)
+    e1.insert(END,g)
+
+
+def seven():
+    g='7'
+    print(g)
+    e1.insert(END,g)
+
+
+def eight():
+     g='8'
+     print(g)
+     e1.insert(END,g)
+
+def nine():
+    g='9'
+    print(g)
+    e1.insert(END,g)
+
+
+def zero():
+    g='0'
+    print(g)
+    e1.insert(END,g)
+
+
+def divide():
+    g = "/"
+    print(g)
+    e1.insert(END,g)
+
+
+def multiply():
+    g = "*"
+    print(g)
+    e1.insert(END,g)
+
+
+def minus():
+    g = "-"
+    print(g)
+    e1.insert(END,g)
+
+
+def plus():
+    g = "+"
+    print(g)
+    e1.insert(END,g)
+
+
+def equals():
+    g = e1.get()
+    print(g)
+    check=re.search('[a-zA-Z]', g)
+    if check:
+        tkinter.messagebox.showerror('Error! ' ,'OOPS!')
+        
+    else:
+        g=eval(g)
+    
+
+    e1.delete(0,END)
+    e1.insert(END,g)
+
+def clear():
+        e1.delete(0,END)
+    
+
+
+e1= Entry(master)
+e1.grid(row = 0,column = 0,columnspan = 5)
+##if OSError=='error':
+##    tkinter.messagebox.showerror('Error! ' ,'OOPS!')
+
+
+b1 = Button(master,text = "1",command = one).grid(row = 1,column = 1)
+
+b1 = Button(master,text = "2",command = two).grid(row = 1,column = 2)
+
+b1 = Button(master,text = "3",command = three).grid(row = 1,column = 3)
+
+b1 = Button(master,text = "4",command = four).grid(row = 2,column = 1)
+
+b1 = Button(master,text = "5",command = five).grid(row = 2,column = 2)
+
+b1 = Button(master,text = "6",command = six).grid(row = 2,column = 3)
+
+b1 = Button(master,text = "7",command = seven).grid(row = 3,column = 1)
+
+b1 = Button(master,text = "8",command = eight).grid(row = 3,column = 2)
+
+b1 = Button(master,text = "9",command = nine).grid(row = 3,column = 3)
+
+b1 = Button(master,text = "0",command = zero).grid(row = 4,column = 1)
+
+b1 = Button(master,text = "/", command = divide).grid(row = 1, column = 4)
+
+b1 = Button(master,text = "*", command = multiply).grid(row = 2, column = 4)
+
+b1 = Button(master,text = "-", command = minus).grid(row = 3, column = 4)
+
+b1 = Button(master,text = "+", command = plus).grid(row = 4, column = 4)
+
+b1 = Button(master,text = "=", command = equals).grid(row = 4, column = 2)
+
+b1 = Button(master,text= "C", command = clear).grid(row = 4, column = 3)
+
+
+
+    
