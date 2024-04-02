@@ -1,0 +1,103 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+const int SIZE = 9;
+
+
+void display(char arr[SIZE][SIZE] )
+{
+    cout << endl << "= = = = = = = = = = = " << endl;
+    for(int i  = 0; i < SIZE; i++)
+    {
+        cout << "= ";
+        for(int j  = 0; j < SIZE; j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout <<  "= " << endl;
+    }
+    cout << "= = = = = = = = = = = " << endl;
+    return;
+}
+void displayFinal(char arr[SIZE][SIZE] )
+{
+    cout << endl << "Path:" << endl;
+    cout << "= = = = = = = = = = = " ;
+    for(int i  = 0; i < SIZE; i++)
+    {
+        cout << endl << "= ";
+        for(int j  = 0; j < SIZE; j++)
+        {
+            if (arr[i][j] == 'W')
+                cout <<  "  ";
+            else
+                cout << arr[i][j] << " ";
+        }
+        cout <<  "= ";
+    }
+    cout << endl << "= = = = = = = = = = = " << endl;
+}
+
+bool withinTheBoundary(int i, int j)
+{
+    return i >= 0 &&  i < SIZE && j >= 0 &&  j < SIZE;
+}
+
+bool Path(char maze2D[SIZE][SIZE], bool visited [SIZE][SIZE], int i, int j, stack<pair<int, int> > &path) {
+  if (!withinTheBoundary(i, j) || maze2D[i][j] == 'W' || visited[i][j] == true) {
+    return false;
+  }
+
+  if (maze2D[i][j] == 'G') {
+    return true;
+  }
+
+  visited[i][j] = true;
+
+  path.push(make_pair(i,j));
+
+  if (Path(maze2D, visited, i, j + 1, path) || Path(maze2D, visited, i, j - 1, path) || Path(maze2D, visited, i + 1, j, path) || Path(maze2D, visited, i - 1, j, path)) {
+    return true;
+  }
+
+  path.pop();
+  return false;
+}
+
+int main()
+{
+    char maze2D[SIZE][SIZE] =
+      { {'S', ' ', ' ', ' ', 'W', ' ', ' ', ' ', ' '},
+        {' ', 'W', ' ', ' ', 'W', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', 'W', 'W', ' ', ' ', 'W', ' '},
+        {'W', ' ', 'W', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', 'W', ' ', ' ', 'W', ' ', ' ', ' '},
+        {' ', 'W', ' ', ' ', ' ', ' ', 'W', ' ', 'W'},
+        {' ', 'W', ' ', 'W', ' ', ' ', 'W', ' ', ' '},
+        {' ', ' ', ' ', 'W', 'W', 'W', ' ', ' ', 'W'},
+        {' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'G'},
+                      };
+
+  stack<pair<int, int> > pathStack;
+
+  bool visited[SIZE][SIZE] = {{false}};
+
+  display(maze2D);
+
+  Path(maze2D, visited, 0,0, pathStack);
+
+  while (!pathStack.empty()) {
+    pair<int, int> p = pathStack.top();
+    pathStack.pop();
+
+    if (maze2D[p.first][p.second] != 'S' && maze2D[p.first][p.second] != 'G') {
+      maze2D[p.first][p.second] = 'o';
+    }
+  }
+
+    display(maze2D);
+
+    return 0;
+}
+
